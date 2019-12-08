@@ -31,10 +31,18 @@ class Solution {
     
     //LEFT SIDE
     List<Point> lx = new ArrayList<>(px.subList(0, mid));
-    List<Point> ly = new ArrayList<>(py.subList(0, mid));
+    List<Point> ly = new ArrayList<>();//new ArrayList<>(py.subList(0, mid));
     //RIGHT SIDE
     List<Point> rx = new ArrayList<>(px.subList(mid, px.size()));
-    List<Point> ry = new ArrayList<>(py.subList(mid, px.size()));
+    List<Point> ry = new ArrayList<>();//new ArrayList<>(py.subList(mid, px.size()));
+    
+    for(Point p : py){ // THIS IS HOW WE CONSTRUCT LEFT Y AND RIGHT Y
+      if(p.x < px.get(mid).x){
+        ly.add(p);
+      }else{
+        ry.add(p);
+      }
+    }
   
     double d1 = closestPair(lx, ly);
     double d2 = closestPair(rx, ry);
@@ -45,9 +53,10 @@ class Solution {
     //FIND THE SMALLEST DISTANCE WITH POINTS FROM BOTH SIDES
     
     List<Point> S = new ArrayList<>();
+    Point leftMost = lx.get(lx.size()-1);
     
     for(Point p : py){
-      if(p.x - mid < d){
+      if(Math.abs(p.x - leftMost.x) < d){
         S.add(p);
       }
     }
@@ -66,11 +75,6 @@ class Solution {
     return d;
   }
 }
-
-
-
-
-
 
 
 
